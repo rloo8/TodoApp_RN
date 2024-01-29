@@ -23,12 +23,12 @@ export default function App() {
     if (text === "") {
       return;
     }
-    const newTodos = { ...todos, [Date.now()]: { text, work: working } };
+    const newTodos = { ...todos, [Date.now()]: { text, working } };
 
     setTodos(newTodos);
     setText("");
   };
-  console.log(todos);
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -66,11 +66,13 @@ export default function App() {
       />
 
       <ScrollView>
-        {Object.keys(todos).map((key) => (
-          <View key={key} style={styles.todo}>
-            <Text style={styles.todoText}>{todos[key].text}</Text>
-          </View>
-        ))}
+        {Object.keys(todos).map((key) =>
+          todos[key].working === working ? (
+            <View key={key} style={styles.todo}>
+              <Text style={styles.todoText}>{todos[key].text}</Text>
+            </View>
+          ) : null
+        )}
       </ScrollView>
     </View>
   );
