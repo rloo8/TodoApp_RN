@@ -1,3 +1,6 @@
+import { StyleSheet } from "react-native";
+import { theme } from "./color";
+
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -18,7 +21,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 15,
     borderRadius: 20,
-    marginTop: 20,
+    marginVertical: 20,
     fontSize: 18,
   },
 });
