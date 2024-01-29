@@ -24,4 +24,11 @@ export const styles = StyleSheet.create({
     marginVertical: 20,
     fontSize: 18,
   },
+  todo: {
+    marginBottom: 10,
+    padding: 20,
+    borderRadius: 15,
+    backgroundColor: "#ccc",
+  },
+  todoText: { color: "black", fontSize: 16, fontWeight: "500" },
 });

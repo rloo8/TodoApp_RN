@@ -1,5 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { theme } from "./color";
 import { useState } from "react";
 import { styles } from "./styles";
@@ -58,6 +64,14 @@ export default function App() {
         placeholder={working ? "Add a to do" : "Where do you wanna go?"}
         placeholderTextColor={theme.green}
       />
+
+      <ScrollView>
+        {Object.keys(todos).map((key) => (
+          <View key={key} style={styles.todo}>
+            <Text style={styles.todoText}>{todos[key].text}</Text>
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
 }
