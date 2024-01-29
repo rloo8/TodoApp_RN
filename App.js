@@ -6,8 +6,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { theme } from "./color";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styles } from "./styles";
 
 export default function App() {
@@ -19,13 +20,26 @@ export default function App() {
   const travel = () => setWorking(false);
 
   const onChangeText = (event) => setText(event);
-  const addToDo = () => {
+
+  const saveToDos = async (toSave) => {
+    await AsyncStorage.setItem("@toDos", JSON.stringify(toSave));
+  };
+  const loadToDos = async () => {
+    const s = await AsyncStorage.getItem("@toDos");
+    s !== null ? setTodos(JSON.parse(s)) : null;
+  };
+  useEffect(() => {
+    loadToDos();
+  }, []);
+
+  const addToDo = async () => {
     if (text === "") {
       return;
     }
     const newTodos = { ...todos, [Date.now()]: { text, working } };
 
     setTodos(newTodos);
+    await saveToDos(newTodos);
     setText("");
   };
 
