@@ -28,7 +28,10 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
     padding: 20,
     borderRadius: 15,
-    backgroundColor: "#ccc",
+    backgroundColor: "#333",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
-  todoText: { color: "black", fontSize: 16, fontWeight: "500" },
+  todoText: { color: "white", fontSize: 18, fontWeight: "500" },
 });

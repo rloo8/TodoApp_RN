@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import {
+  Alert,
   ScrollView,
   Text,
   TextInput,
@@ -10,6 +11,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { theme } from "./color";
 import { useEffect, useState } from "react";
 import { styles } from "./styles";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function App() {
   const [working, setWorking] = useState(true);
@@ -21,6 +23,7 @@ export default function App() {
 
   const onChangeText = (event) => setText(event);
 
+  //AsyncStorage에 저장, 불러오기
   const saveToDos = async (toSave) => {
     await AsyncStorage.setItem("@toDos", JSON.stringify(toSave));
   };
@@ -32,6 +35,7 @@ export default function App() {
     loadToDos();
   }, []);
 
+  // todo submit
   const addToDo = async () => {
     if (text === "") {
       return;
@@ -41,6 +45,23 @@ export default function App() {
     setTodos(newTodos);
     await saveToDos(newTodos);
     setText("");
+  };
+
+  // todo 삭제
+  const deleteToDo = async (key) => {
+    Alert.alert("Delete", "Are you sure?", [
+      { text: "Cancel" },
+      {
+        text: "Delete",
+        onPress: async () => {
+          const newTodos = { ...todos };
+          delete newTodos[key];
+
+          setTodos(newTodos);
+          await saveToDos(newTodos);
+        },
+      },
+    ]);
   };
 
   return (
@@ -84,6 +105,11 @@ export default function App() {
           todos[key].working === working ? (
             <View key={key} style={styles.todo}>
               <Text style={styles.todoText}>{todos[key].text}</Text>
+              <TouchableOpacity onPress={() => deleteToDo(key)}>
+                <Text>
+                  <MaterialIcons name="cancel" size={30} color={theme.green} />
+                </Text>
+              </TouchableOpacity>
             </View>
           ) : null
         )}
