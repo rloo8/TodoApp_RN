@@ -18,8 +18,14 @@ export default function App() {
   const [text, setText] = useState();
   const [todos, setTodos] = useState({});
 
-  const work = () => setWorking(true);
-  const travel = () => setWorking(false);
+  const work = () => {
+    setWorking(true);
+    saveWorkingMode(true);
+  };
+  const travel = () => {
+    setWorking(false);
+    saveWorkingMode(false);
+  };
 
   const onChangeText = (event) => setText(event);
 
@@ -28,14 +34,24 @@ export default function App() {
     await AsyncStorage.setItem("@toDos", JSON.stringify(toSave));
   };
   const loadToDos = async () => {
-    const s = await AsyncStorage.getItem("@toDos");
-    s !== null ? setTodos(JSON.parse(s)) : null;
+    const todo = await AsyncStorage.getItem("@toDos");
+    todo !== null ? setTodos(JSON.parse(todo)) : null;
   };
+
+  const saveWorkingMode = async (mode) => {
+    await AsyncStorage.setItem("@workingMode", mode.toString());
+  };
+  const loadWorkingMode = async () => {
+    const mode = await AsyncStorage.getItem("@workingMode");
+    setWorking(mode === "true");
+  };
+
   useEffect(() => {
     loadToDos();
+    loadWorkingMode();
   }, []);
 
-  // todo submit
+  // todo submit시
   const addToDo = async () => {
     if (text === "") {
       return;
@@ -47,7 +63,7 @@ export default function App() {
     setText("");
   };
 
-  // todo 삭제
+  // todo 삭제버튼 클릭시
   const deleteToDo = async (key) => {
     Alert.alert("Delete", "Are you sure?", [
       { text: "Cancel" },
