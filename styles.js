@@ -24,6 +24,12 @@ export const styles = StyleSheet.create({
     marginVertical: 20,
     fontSize: 18,
   },
+  editInput: {
+    flex: 1,
+    width: 100,
+    fontSize: 18,
+    color: "white",
+  },
   todoBox: {
     marginBottom: 10,
     padding: 20,
