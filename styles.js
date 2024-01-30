@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     marginVertical: 20,
     fontSize: 18,
   },
-  todo: {
+  todoBox: {
     marginBottom: 10,
     padding: 20,
     borderRadius: 15,
@@ -33,5 +33,6 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
+  todo: { flexDirection: "row", alignItems: "center", gap: 10 },
   todoText: { color: "white", fontSize: 18, fontWeight: "500" },
 });

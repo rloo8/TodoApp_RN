@@ -56,7 +56,7 @@ export default function App() {
     if (text === "") {
       return;
     }
-    const newTodos = { ...todos, [Date.now()]: { text, working } };
+    const newTodos = { [Date.now()]: { text, working, done: false }, ...todos };
 
     setTodos(newTodos);
     await saveToDos(newTodos);
@@ -78,6 +78,14 @@ export default function App() {
         },
       },
     ]);
+  };
+
+  // done 체크박스 토글
+  const toggleDone = async (key) => {
+    const newTodos = { ...todos };
+    newTodos[key].done = !newTodos[key].done;
+    setTodos(newTodos);
+    await saveToDos(newTodos);
   };
 
   return (
@@ -119,8 +127,36 @@ export default function App() {
       <ScrollView>
         {Object.keys(todos).map((key) =>
           todos[key].working === working ? (
-            <View key={key} style={styles.todo}>
-              <Text style={styles.todoText}>{todos[key].text}</Text>
+            <View key={key} style={styles.todoBox}>
+              <View style={styles.todo}>
+                <TouchableOpacity onPress={() => toggleDone(key)}>
+                  <Text>
+                    <MaterialIcons
+                      name={
+                        todos[key].done
+                          ? "check-box"
+                          : "check-box-outline-blank"
+                      }
+                      size={30}
+                      color={theme.green}
+                    />
+                  </Text>
+                </TouchableOpacity>
+                <Text
+                  style={
+                    todos[key].done
+                      ? {
+                          ...styles.todoText,
+                          textDecorationLine: "line-through",
+                          color: "#888",
+                        }
+                      : styles.todoText
+                  }
+                >
+                  {todos[key].text}
+                </Text>
+              </View>
+
               <TouchableOpacity onPress={() => deleteToDo(key)}>
                 <Text>
                   <MaterialIcons name="cancel" size={30} color={theme.green} />
