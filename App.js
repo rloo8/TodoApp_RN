@@ -128,8 +128,11 @@ export default function App() {
         {Object.keys(todos).map((key) =>
           todos[key].working === working ? (
             <View key={key} style={styles.todoBox}>
-              <View style={styles.todo}>
-                <TouchableOpacity onPress={() => toggleDone(key)}>
+              <TouchableOpacity
+                style={styles.todo}
+                onPress={() => toggleDone(key)}
+              >
+                <View>
                   <Text>
                     <MaterialIcons
                       name={
@@ -141,7 +144,7 @@ export default function App() {
                       color={theme.green}
                     />
                   </Text>
-                </TouchableOpacity>
+                </View>
                 <Text
                   style={
                     todos[key].done
@@ -155,13 +158,24 @@ export default function App() {
                 >
                   {todos[key].text}
                 </Text>
-              </View>
-
-              <TouchableOpacity onPress={() => deleteToDo(key)}>
-                <Text>
-                  <MaterialIcons name="cancel" size={30} color={theme.green} />
-                </Text>
               </TouchableOpacity>
+
+              <View style={styles.todo}>
+                <TouchableOpacity onPress={() => deleteToDo(key)}>
+                  <Text>
+                    <MaterialIcons name="edit" size={30} color={theme.green} />
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => deleteToDo(key)}>
+                  <Text>
+                    <MaterialIcons
+                      name="cancel"
+                      size={30}
+                      color={theme.green}
+                    />
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           ) : null
         )}
